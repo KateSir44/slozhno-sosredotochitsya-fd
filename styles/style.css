@@ -1,8 +1,9 @@
-/* Основные стили проекта. Это стили для темы, которую вы верстаете первой. */
-
 .page {
-  font-family: "IBM Plex mono", "Arial", sans-serif;
+  font-family: "IBM Plex mono", monospace;
+  background-color: var(--bg-color-page);
   background-image: var(--bg-image);
+  background-position: center;
+  background-size: cover;
   background-attachment: fixed;
 }
 
@@ -12,9 +13,8 @@
   grid-template-rows: 1fr min-content 1fr;
   grid-template-areas: "menu";
   padding: 10px;
-  background-image: var(--bg-image);
-  background-position: center;
-  background-size: cover;
+  block-size: 100vh;
+  min-block-size: 668px;
 }
 
 .decorated-zone::before {
@@ -22,8 +22,8 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  border-inline-end: 1px solid var(--color-accent);
-  border-block-start: 1px solid var(--color-accent);
+  border-inline-end: 1px solid var(--color-rectangle);
+  border-block-start: 1px solid var(--color-rectangle);
   inline-size: 25px;
   block-size: 25px;
 }
@@ -33,21 +33,23 @@
   position: absolute;
   bottom: 10px;
   left: 10px;
-  border-inline-start: 1px solid var(--color-accent);
-  border-block-end: 1px solid var(--color-accent);
+  border-inline-start: 1px solid var(--color-rectangle);
+  border-block-end: 1px solid var(--color-rectangle);
   inline-size: 25px;
   block-size: 25px;
 }
 
 .header__record {
   position: relative;
+  position: absolute;
+  right: 0;
+  display: var(--record-visible);
   grid-area: menu;
   padding-inline-end: 28px;
-  color: var(--color-accent);
+  color: var(--color-record);
   font-family: inherit;
   font-size: var(--fs-text);
   line-height: 25px;
-  text-align: end;
   block-size: 25px;
 }
 
@@ -57,9 +59,9 @@
   top: 5px;
   right: 5px;
   margin: 2px 4px;
-  border: 5px solid var(--color-accent);
+  border: 5px solid var(--color-record);
   border-radius: 50%;
-  box-shadow: 0px 0px 4px 2px var(--color-accent);
+  box-shadow: 0px 0px 4px 2px var(--color-record);
 }
 
 .header__theme-menu {
@@ -70,23 +72,26 @@
 .header__theme-menu-list {
   display: grid;
   grid-template-columns: 70px;
-  grid-template-rows: repeat(3, 26px);
   justify-content: end;
   gap: 10px;
 }
 
 .header__theme-menu-button {
   border: none;
-  padding: 0 13px;
-  color: var(--color-accent);
+  padding: 1.5px 13px;
+  color: var(--color-button);
   font-size: var(--fs-text);
-  line-height: 25px;
+  line-height: 24px;
   text-transform: lowercase;
   background-color: transparent;
 }
 
+.header__theme-menu-item {
+  transition: outline 0.6s;
+}
+
 .header__theme-menu-item:hover {
-  outline: 1px solid rgba(255, 0, 112, 0.4);
+  outline: 1px solid var(--outline-button-hover);
 }
 
 .header__theme-menu-button:focus {
@@ -97,16 +102,21 @@
   border-block-end: 1px solid currentColor;
 }
 
+.header__theme-menu-button_active {
+  outline: 1px solid var(--color-button);
+  pointer-events: none;
+}
+
 .header__title {
-  color: var(--title-color);
+  color: var(--color-title);
   font-size: var(--fs-title);
   line-height: 83%;
-  text-shadow: 4px 4px 0 var(--color-accent);
+  text-shadow: 4px 4px 0 var(--shadow-header);
 }
 
 .title-decor {
-  color: var(--color-text-accent);
-  background-color: var(--color-accent);
+  color: var(--color-title-bg);
+  background-color: var(--bg-color-title);
 }
 
 .header__text {
@@ -115,7 +125,9 @@
   font-weight: var(--fw-text-bold);
   font-size: var(--fs-text);
   line-height: var(--lh-text);
-  background-color: var(--color-accent);
+  background-color: var(--bg-color-title);
+  max-inline-size: 767px;
+  max-block-size: min-content;
 }
 
 .content {
@@ -130,7 +142,7 @@
 }
 
 .section__title {
-  color: var(--color-accent);
+  color: var(--color-title-section);
   font-family: inherit;
   font-weight: var(--fw-text-bold);
   font-size: var(--fs-text);
@@ -144,8 +156,9 @@
   line-height: var(--lh-text);
 }
 
-.section__subtitle__points {
-  margin-block-end: 20px;
+.advices-section__list {
+  display: grid;
+  gap: 20px;
 }
 
 .section__subtitle__list {
@@ -157,7 +170,7 @@
 
 .paragraph {
   padding-block-start: 10px;
-  color: var(--color-text);
+  color: var(--color-text-content);
   font-family: inherit;
   font-weight: var(--fw-text-regular);
   font-size: var(--fs-text);
@@ -166,12 +179,11 @@
 
 .paragraph__link {
   text-decoration: none;
-  text-shadow: 2px 1px var(--color-accent);
+  text-shadow: 2px 1px var(--shadow-link);
 }
 
 .paragraph__link:hover {
-  text-decoration: underline solid currentColor 1px;
-  text-underline-offset: 2px;
+  border-bottom: 1px solid currentColor;
 }
 
 .paragraph__link:focus {
@@ -184,7 +196,7 @@
 }
 
 .section__gallery-image {
-  max-inline-size: 100%;
+  inline-size: 100%;
   block-size: auto;
 }
 
@@ -193,17 +205,21 @@
   display: grid;
   justify-content: center;
   align-content: center;
-  color: var(--title-color);
-  font-weight: var(--fw-text-bold);
-  font-size: var(--fs-title);
-  line-height: 83%;
-  text-shadow: 2px 2px 0px var(--color-accent);
+  block-size: 100vh;
   min-block-size: 668px;
 }
 
-/* @media (width >= 768px) {
+.footer-title {
+  color: var(--color-title);
+  font-weight: var(--fw-text-bold);
+  font-size: var(--fs-title);
+  text-shadow: 2px 2px 0px var(--shadow-footer);
+}
+
+@media (width >= 768px) {
   .header {
     padding: 20px 20px 20px 0;
+    max-block-size: 1024px;
   }
 
   .decorated-zone::before {
@@ -230,30 +246,24 @@
     margin: 60px 20px;
   }
 
-  .content__section-1 {
+  .why-section {
     grid-template-columns: 1fr 2fr;
-    grid-template-rows: repeat(2, 1fr);
   }
 
-  .content__section-2 {
-    grid-template-rows: 70px repeat(3, min-content);
-  }
-
-  .content__section-3 {
+  .advices-section {
     grid-template-columns: 1fr 2fr;
-    grid-template-rows: repeat(5, min-content);
   }
 
-  .section__title-1 {
+  .why-section .section__title {
     grid-row: 1 / 3;
   }
 
-  .section__title-2 {
+  .causes-section .section__title {
     padding-inline-end: 492px;
   }
 
-  .section__title-3 {
-    grid-row: 1 / 6;
+  .advices-section .section__title {
+    grid-row: 1 / 3;
   }
 
   .section__gallery {
@@ -263,51 +273,57 @@
   }
 
   .section__gallery-image {
-    block-size: 100%;
     object-fit: cover;
     object-position: center;
+    block-size: 100%;
   }
 
   .section__subtitle__gallery {
     grid-column: 1 / 4;
   }
 
-  .section__gallery-image-1 {
+  .section__gallery-sunset {
     grid-column: 1 / 3;
   }
 
-  .section__gallery-image-2 {
+  .section__gallery-ice-cream {
     grid-column: 3 / 4;
     grid-row: 2 / 4;
     block-size: 100%;
   }
 
-  .section__gallery-image-3 {
+  .section__gallery-tape {
     grid-row: 3 / 5;
   }
 
-  .section__gallery-image-4 {
+  .section__gallery-books {
     grid-column: 2 / 3;
   }
 
-  .section__gallery-image-5 {
+  .section__gallery-street {
     grid-column: 2 / 4;
   }
 
   .footer {
+    max-block-size: 1024px;
+  }
+
+  .footer-title {
     font-size: var(--fs-title-big);
-    min-block-size: 1024px;
   }
 }
 
 @media (width >= 1024px) {
+  .header {
+    min-block-size: 768px;
+  }
+
   .header__theme-menu {
     align-content: start;
   }
 
   .header__theme-menu-list {
     grid-template-columns: repeat(3, 70px);
-    grid-template-rows: 26px;
     justify-content: center;
     padding-inline-start: 20px;
   }
@@ -316,25 +332,24 @@
     margin: 114px 0 114px 513px;
   }
 
-  .content__section-1 {
+  .why-section {
     grid-template-columns: 315px auto;
   }
 
-  .content__section-2 {
+  .causes-section {
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 47px min-content;
   }
 
-  .section__title-2 {
+  .causes-section .section__title {
     grid-column: 1 / 4;
     padding-inline-end: 669px;
   }
 
-  .content__section-3 {
+  .advices-section {
     grid-template-columns: 315px auto;
   }
 
   .footer {
     min-block-size: 768px;
   }
-} */
+}
