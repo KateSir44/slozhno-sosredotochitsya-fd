@@ -156,16 +156,9 @@
   line-height: var(--lh-text);
 }
 
-.advices-section__list {
-  display: grid;
-  gap: 20px;
-}
-
-.section__subtitle__list {
-  font-family: inherit;
+.advices-section__list__item__subtitle {
   font-weight: var(--fw-text-regular);
   font-size: var(--fs-text);
-  line-height: var(--lh-text);
 }
 
 .paragraph {
@@ -219,7 +212,7 @@
 @media (width >= 768px) {
   .header {
     padding: 20px 20px 20px 0;
-    max-block-size: 1024px;
+    min-block-size: 1024px;
   }
 
   .decorated-zone::before {
@@ -305,7 +298,7 @@
   }
 
   .footer {
-    max-block-size: 1024px;
+    min-block-size: 1024px;
   }
 
   .footer-title {
